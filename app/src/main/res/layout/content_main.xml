@@ -7,7 +7,12 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".MainActivity"
     tools:showIn="@layout/activity_main"
-    android:orientation="horizontal">
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:orientation="horizontal">
 
     <Button
         android:id="@+id/button_decrement"
@@ -24,11 +29,20 @@
         android:textColor="@android:color/black"
         android:textSize="50sp" />
 
+
+
     <Button
         android:id="@+id/button_increment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="+" />
 
+    </LinearLayout>
 
+    <Button
+        android:id="@+id/btnSharedPref"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Guardar a Shared Preferences"
+        android:onClick="saveSharedPref"/>
 </LinearLayout>

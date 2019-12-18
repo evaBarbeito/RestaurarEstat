@@ -1,6 +1,7 @@
 package com.example.restaurarestat;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -21,8 +22,9 @@ public class MainActivity extends AppCompatActivity {
     When there are runtime configuration changes in your Android phone,
     like changing the screen orientation or the device’s language,
     your whole app process will be destroyed and recreated from scratch and together with it,
-    all member variables will be reset. The system already takes care of default views like
-    the text in an EditText field or the scrolling position of a RecyclerView or ListView.
+    all member variables will be reset.
+    The system already takes care of default views like the text in an EditText field
+    or the scrolling position of a RecyclerView or ListView.
     But we have to restore the variables of our activity ourselves and we do this by overriding
     onSaveInstanceState and passing the values to the outState Bundle. After the Activity has been recreated,
     there are 2 places where we can get our values back: onCreate or onRestoreInstanceState,
@@ -57,6 +59,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        //fab
+        // TODO: 12/18/19
+
+
+        SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
+        //Gson gson = new Gson();
+        Integer record = sharedPreferences.getInt("record", 0);
+        record=mCount;
+        //Type type = new TypeToken<ArrayList<ExampleItem>>() {}.getType();
+        //mExampleList = gson.fromJson(json, type);
+
+
+
+        //si s'ha girat...
         if (savedInstanceState != null) {
             mCount = savedInstanceState.getInt("count");
             mTextViewCount.setText(String.valueOf(mCount));
@@ -103,5 +120,17 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void saveSharedPref(View view) {
+
+
+        //https://codinginflow.com/tutorials/android/save-arraylist-to-sharedpreferences-with-gson
+        SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        //Gson gson = new Gson();
+        //String json = gson.toJson(mExampleList);
+        editor.putInt("record", mCount);
+        editor.apply();
     }
 }
