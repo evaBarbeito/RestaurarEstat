@@ -24,8 +24,10 @@ public class MainActivity extends AppCompatActivity {
     like changing the screen orientation or the device’s language,
     your whole app process will be destroyed and recreated from scratch and together with it,
     all member variables will be reset.
+
     The system already takes care of default views like the text in an EditText field
     or the scrolling position of a RecyclerView or ListView.
+
     But we have to restore the variables of our activity ourselves and we do this by overriding
     onSaveInstanceState and passing the values to the outState Bundle. After the Activity has been recreated,
     there are 2 places where we can get our values back: onCreate or onRestoreInstanceState,
@@ -43,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
         mTextViewCount = findViewById(R.id.text_view_count);
 
+        setTitle("RestaurarEstat");
         Button buttonDecrement = findViewById(R.id.button_decrement);
         Button buttonIncrement = findViewById(R.id.button_increment);
 
@@ -80,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState != null) {
             mCount = savedInstanceState.getInt("count");
             // TODO: 19/12/19 comentar linia de sota per veure que en girar-ho es perd l estat
-            //mTextViewCount.setText(String.valueOf(mCount));
+            mTextViewCount.setText(String.valueOf(mCount));
             Toast.makeText(this, "entra a restaurar", Toast.LENGTH_SHORT).show();
         }
     }
