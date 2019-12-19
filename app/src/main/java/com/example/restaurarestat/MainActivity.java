@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     /*
@@ -67,16 +68,20 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
         //Gson gson = new Gson();
         Integer record = sharedPreferences.getInt("record", 0);
-        record=mCount;
-        //Type type = new TypeToken<ArrayList<ExampleItem>>() {}.getType();
-        //mExampleList = gson.fromJson(json, type);
+
+        //opcional, carregar el record al txtViewCount
+        //record=mCount;
+
+        Toast.makeText(this, "Puntuació és:" + record, Toast.LENGTH_LONG).show();
 
 
 
         //si s'ha girat...
         if (savedInstanceState != null) {
             mCount = savedInstanceState.getInt("count");
-            mTextViewCount.setText(String.valueOf(mCount));
+            // TODO: 19/12/19 comentar linia de sota per veure que en girar-ho es perd l estat
+            //mTextViewCount.setText(String.valueOf(mCount));
+            Toast.makeText(this, "entra a restaurar", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -125,11 +130,8 @@ public class MainActivity extends AppCompatActivity {
     public void saveSharedPref(View view) {
 
 
-        //https://codinginflow.com/tutorials/android/save-arraylist-to-sharedpreferences-with-gson
         SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        //Gson gson = new Gson();
-        //String json = gson.toJson(mExampleList);
         editor.putInt("record", mCount);
         editor.apply();
     }
