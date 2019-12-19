@@ -29,7 +29,7 @@ public class CountDownTimerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_count_down_timer);
 
         mTextViewCountDown = findViewById(R.id.text_view_countdown);
 

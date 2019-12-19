@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
         mTextViewCount = findViewById(R.id.text_view_count);
 
-        setTitle("RestaurarEstat");
+        //setTitle("RestaurarEstat");
         Button buttonDecrement = findViewById(R.id.button_decrement);
         Button buttonIncrement = findViewById(R.id.button_increment);
 
