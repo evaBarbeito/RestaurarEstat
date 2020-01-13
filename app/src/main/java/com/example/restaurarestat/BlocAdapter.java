@@ -20,7 +20,7 @@ public class BlocAdapter extends RecyclerView.Adapter<BlocAdapter.BlocViewHolder
 
         public BlocViewHolder(View itemView) {
             super(itemView);
-            mTextViewLine1 = itemView.findViewById(R.id.textview_line1);
+            mTextViewLine1 = itemView.findViewById(R.id.textview_line1) ;
             mTextViewLine2 = itemView.findViewById(R.id.textview_line_2);
         }
     }
@@ -41,8 +41,8 @@ public class BlocAdapter extends RecyclerView.Adapter<BlocAdapter.BlocViewHolder
     public void onBindViewHolder(BlocViewHolder holder, int position) {
         Bloc currentItem = mBlocList.get(position);
 
-        holder.mTextViewLine1.setText(currentItem.getHoraInici());
-        holder.mTextViewLine2.setText(currentItem.getTemperatura());
+        holder.mTextViewLine1.setText(currentItem.getHoraInici() +  ":00 h");
+        holder.mTextViewLine2.setText(currentItem.getTemperatura()+ "ºC");
     }
 
     @Override

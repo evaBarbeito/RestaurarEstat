@@ -24,6 +24,39 @@ public class BlocGson extends AppCompatActivity {
     private BlocAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
+    //quan es tomba o locale canvia, runtime configuration changes...
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Gson gson = new Gson();
+        String json = gson.toJson(mBlocList);
+        outState.putString("blocs", json);
+        Log.d("test", "onSaveInstanceState: paso onSave");
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        String json = savedInstanceState.getString("blocs");
+        Type type = new TypeToken<ArrayList<Bloc>>() {}.getType();
+        Gson gson = new Gson();
+        mBlocList = gson.fromJson(json, type);
+
+
+        //mAdapter.notifyDataSetChanged(); no pot propagar canvis, no va...
+        buildRecyclerView();
+
+
+        Log.d("test", "onRestoreInstanceState: paso rest"+
+                mBlocList.get(0).getHoraInici()+mBlocList.get(1).getHoraInici());
+
+        if (mBlocList == null) {
+            mBlocList = new ArrayList<>();
+            Log.d("test", "onRestoreInstanceState: null!!");
+        }
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +64,17 @@ public class BlocGson extends AppCompatActivity {
 
         //https://www.youtube.com/watch?v=jcliHGR3CHo&list=LLSrVQD6aijhcCpv8EeUZXBQ&index=12&t=0s
 
-        loadData();
+        //loadData();
+        // prova  a comentar loadData(), descomenta el de sota, i en tombar, veuràs que es perd la
+        // llista recycler...
+        if (mBlocList == null) {
+            mBlocList = new ArrayList<>();
+        }
+        // solució? sobreescriure onSaveInstanceState i onRestoreInstanceState
+
+        // TODO: 14/01/20 fer botó load per loadData...
+
+        Log.d("test", "onCreate: ordre 1.onSaveInstanceState, 2.onCreate 3.onRestoreInstanceState");
         buildRecyclerView();
         setInsertButton();
 
@@ -50,7 +93,13 @@ public class BlocGson extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
+        //li podries passar un objecte Bloc aquí sota... tot ho passa a String...
         String json = gson.toJson(mBlocList);
+
+        //també es fa servir gson.toJson per passar paràmetre com a String, a una nova activity
+        //amb intent.putExtra("key", json)....
+        // i el fromJson(getIntent().getStringExtra("key"),Bloc.class) per recuperar l objecte a la nova activity
+
         editor.putString("blocs", json);
         editor.apply();
         Log.d("test", "saved "+json);
@@ -64,6 +113,9 @@ public class BlocGson extends AppCompatActivity {
         //recupera el String, i el passa al tipus que necessitem
         Type type = new TypeToken<ArrayList<Bloc>>() {}.getType();
         mBlocList = gson.fromJson(json, type);
+        //si fos un objecte Bloc el que volgués carregar, seria més senzill, no cal el tipus Type
+        // Type és per llista d'objectes custom
+        // només caldria fer bloc= gson.fromJSon(json, Bloc.class)
 
         if (mBlocList == null) {
             mBlocList = new ArrayList<>();
