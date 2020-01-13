@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class BlocAdapter extends RecyclerView.Adapter<BlocAdapter.BlocViewHolder> {
 
-    private ArrayList<Bloc> mExampleList;
+    private ArrayList<Bloc> mBlocList;
 
     public static class BlocViewHolder extends RecyclerView.ViewHolder {
         public TextView mTextViewLine1;
@@ -26,7 +26,7 @@ public class BlocAdapter extends RecyclerView.Adapter<BlocAdapter.BlocViewHolder
     }
 
     public BlocAdapter(ArrayList<Bloc> exampleList) {
-        mExampleList = exampleList;
+        mBlocList = exampleList;
     }
 
 
@@ -39,7 +39,7 @@ public class BlocAdapter extends RecyclerView.Adapter<BlocAdapter.BlocViewHolder
 
     @Override
     public void onBindViewHolder(BlocViewHolder holder, int position) {
-        Bloc currentItem = mExampleList.get(position);
+        Bloc currentItem = mBlocList.get(position);
 
         holder.mTextViewLine1.setText(currentItem.getHoraInici());
         holder.mTextViewLine2.setText(currentItem.getTemperatura());
@@ -47,6 +47,6 @@ public class BlocAdapter extends RecyclerView.Adapter<BlocAdapter.BlocViewHolder
 
     @Override
     public int getItemCount() {
-        return mExampleList.size();
+        return mBlocList.size();
     }
 }

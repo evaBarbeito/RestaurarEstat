@@ -30,7 +30,8 @@ public class MainActivity extends AppCompatActivity {
     or the scrolling position of a RecyclerView or ListView.
 
     But we have to restore the variables of our activity ourselves and we do this by overriding
-    onSaveInstanceState and passing the values to the outState Bundle. After the Activity has been recreated,
+    onSaveInstanceState and passing the values to the outState Bundle.
+    After the Activity has been recreated,
     there are 2 places where we can get our values back: onCreate or onRestoreInstanceState,
     which both get passed the savedInstanceState Bundle.
 
@@ -65,9 +66,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        //fab
-        // TODO: 12/18/19
-
 
         SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
 
@@ -77,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
         //record=mCount;
 
         Toast.makeText(this, "Puntuació és:" + record, Toast.LENGTH_LONG).show();
-
 
 
         //si s'ha girat... o canviat idioma...
@@ -134,9 +131,9 @@ public class MainActivity extends AppCompatActivity {
         }
         else if (id == R.id.bloc) {
 
-                startActivity(new Intent(this, BlocGson.class));
+            startActivity(new Intent(this, BlocGson.class));
 
-                return true;
+            return true;
 
             }
 
@@ -151,8 +148,6 @@ public class MainActivity extends AppCompatActivity {
         editor.putInt("record", mCount);
         editor.apply();
 
-
-        Gson gson = new Gson();
 
     }
 }

@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,7 +18,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class BlocGson extends AppCompatActivity {
-    ArrayList<Bloc> mExampleList;
+    ArrayList<Bloc> mBlocList;
 
     private RecyclerView mRecyclerView;
     private BlocAdapter mAdapter;
@@ -41,28 +42,31 @@ public class BlocGson extends AppCompatActivity {
                 saveData();
             }
         });
-
     }
 
-
     private void saveData() {
+        //guarda un ArrayList de Blocs de temperatures
+
         SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
-        String json = gson.toJson(mExampleList);
-        editor.putString("task list", json);
+        String json = gson.toJson(mBlocList);
+        editor.putString("blocs", json);
         editor.apply();
+        Log.d("test", "saved "+json);
+
     }
 
     private void loadData() {
         SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
         Gson gson = new Gson();
-        String json = sharedPreferences.getString("task list", null);
+        String json = sharedPreferences.getString("blocs", null);
+        //recupera el String, i el passa al tipus que necessitem
         Type type = new TypeToken<ArrayList<Bloc>>() {}.getType();
-        mExampleList = gson.fromJson(json, type);
+        mBlocList = gson.fromJson(json, type);
 
-        if (mExampleList == null) {
-            mExampleList = new ArrayList<>();
+        if (mBlocList == null) {
+            mBlocList = new ArrayList<>();
         }
     }
 
@@ -70,7 +74,8 @@ public class BlocGson extends AppCompatActivity {
         mRecyclerView = findViewById(R.id.recyclerview);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
-        mAdapter = new BlocAdapter(mExampleList);
+
+        mAdapter = new BlocAdapter(mBlocList);
 
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
@@ -81,16 +86,23 @@ public class BlocGson extends AppCompatActivity {
         buttonInsert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText line1 = findViewById(R.id.edittext_line_1);
-                EditText line2 = findViewById(R.id.edittext_line_2);
-                insertItem(line1.getText().toString(), line2.getText().toString());
+                    EditText line1 = findViewById(R.id.edittext_line_1);
+                    EditText line2 = findViewById(R.id.edittext_line_2);
+
+                    insertItem(line1.getText().toString(), line2.getText().toString());
             }
         });
     }
 
     private void insertItem(String line1, String line2) {
-        mExampleList.add(new Bloc(line1, line2,""));
-        mAdapter.notifyItemInserted(mExampleList.size());
+        try {
+
+            mBlocList.add(new Bloc(line1, line2,"hot"));
+            mAdapter.notifyItemInserted(mBlocList.size());
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.d("test", "insertItem: "+e.getCause()+e.getMessage());
+        }
     }
 
 }
