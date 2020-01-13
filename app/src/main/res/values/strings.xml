@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">RestaurarEstat</string>
     <string name="action_settings">CountDownTimer</string>
+    <string name="action_bloc">bloc</string>
 </resources>

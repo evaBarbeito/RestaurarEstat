@@ -134,7 +134,11 @@ public class CountDownTimerActivity extends AppCompatActivity {
 
         mTimeLeftInMillis = savedInstanceState.getLong("millisLeft");
         mTimerRunning = savedInstanceState.getBoolean("timerRunning");
+
+        // TODO: 13/1/20 comentar linia 140 per veure que en girar-ho es perd l estat
+        // els textview es perden...
         updateCountDownText();
+
         updateButtons();
 
         if (mTimerRunning) {

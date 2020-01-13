@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -69,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
-        //Gson gson = new Gson();
+
         Integer record = sharedPreferences.getInt("record", 0);
 
         //opcional, carregar el record al txtViewCount
@@ -79,10 +80,15 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        //si s'ha girat...
+        //si s'ha girat... o canviat idioma...
         if (savedInstanceState != null) {
             mCount = savedInstanceState.getInt("count");
-            // TODO: 19/12/19 comentar linia de sota per veure que en girar-ho es perd l estat
+
+            // TODO: 19/12/19 comentar linia 91 per veure que en girar-ho es perd l estat
+            // els textview es perden...
+            // aquí es recupera dins onCreate, a l'altre activity CountDownTimer, sobreescrivint el mètode
+            // onRestoreInstanceState
+
             mTextViewCount.setText(String.valueOf(mCount));
             Toast.makeText(this, "entra a restaurar", Toast.LENGTH_SHORT).show();
         }
@@ -126,16 +132,27 @@ public class MainActivity extends AppCompatActivity {
 
             return true;
         }
+        else if (id == R.id.bloc) {
+
+                startActivity(new Intent(this, BlocGson.class));
+
+                return true;
+
+            }
 
         return super.onOptionsItemSelected(item);
     }
 
     public void saveSharedPref(View view) {
 
-
+        //guarda el contatge...
         SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("record", mCount);
         editor.apply();
+
+
+        Gson gson = new Gson();
+
     }
 }
