@@ -4,12 +4,12 @@ public class Bloc {
 
     private String horaInici;
     private String temperatura;
-    private String tempsCalorFred;
+    private String humitat;
 
     public Bloc(String horaInici, String temperatura, String tempsCalorFred){
         this.horaInici = horaInici;
         this.temperatura = temperatura;
-        this.tempsCalorFred = tempsCalorFred;
+        this.humitat = tempsCalorFred;
 
     }
 
@@ -21,8 +21,8 @@ public class Bloc {
         return temperatura;
     }
 
-    public String getTempsCalorFred() {
-        return tempsCalorFred;
+    public String getHumitat() {
+        return humitat;
     }
 
     public void setHoraInici(String horaInici) {
@@ -33,7 +33,7 @@ public class Bloc {
         this.temperatura = temperatura;
     }
 
-    public void setTempsCalorFred(String tempsCalorFred) {
-        this.tempsCalorFred = tempsCalorFred;
+    public void setHumitat(String humitat) {
+        this.humitat = humitat;
     }
 }
