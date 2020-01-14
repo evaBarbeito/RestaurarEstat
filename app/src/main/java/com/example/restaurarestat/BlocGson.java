@@ -4,10 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -34,6 +36,9 @@ public class BlocGson extends AppCompatActivity {
         Log.d("test", "onSaveInstanceState: paso onSave");
     }
 
+    // l'alternativa d aquest de sota, és fer-ho al oncreate, com a la MainActivity
+    //   if (savedInstanceState != null) {
+    //      ....
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
@@ -71,6 +76,7 @@ public class BlocGson extends AppCompatActivity {
             mBlocList = new ArrayList<>();
         }
         // solució? sobreescriure onSaveInstanceState i onRestoreInstanceState
+        // comenta els mètodes de sobre per veure que en tombar, es perd la llista...
 
         // TODO: 14/01/20 fer botó load per loadData...
 
@@ -131,6 +137,26 @@ public class BlocGson extends AppCompatActivity {
 
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
+
+        // TODO: 14/01/20 interfície listener a BlocAdapter
+        mAdapter.setOnItemClickListener(new BlocAdapter.OnItemClickListener(){
+            @Override
+            public void onItemClick(int position) {
+
+                try {
+                    Intent intent = new Intent(BlocGson.this, ActivityDisplayBloc.class);
+                    intent.putExtra("Bloc", mBlocList.get(position));
+
+                    startActivity(intent);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.d("test", "onItemClick: "+e.getMessage()+e.getCause());
+
+                }
+            }
+        });
+
+
     }
 
     private void setInsertButton() {

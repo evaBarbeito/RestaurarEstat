@@ -12,6 +12,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".BlocGson"></activity>
+        <activity android:name=".ActivityDisplayBloc"></activity>
         <activity android:name=".CountDownTimerActivity" />
         <activity
             android:name=".MainActivity"

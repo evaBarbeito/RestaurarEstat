@@ -14,14 +14,36 @@ public class BlocAdapter extends RecyclerView.Adapter<BlocAdapter.BlocViewHolder
 
     private ArrayList<Bloc> mBlocList;
 
+    private OnItemClickListener mListener;
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mListener = listener;
+    }
+
     public static class BlocViewHolder extends RecyclerView.ViewHolder {
         public TextView mTextViewLine1;
         public TextView mTextViewLine2;
 
-        public BlocViewHolder(View itemView) {
+        public BlocViewHolder(View itemView, final OnItemClickListener listener) {
             super(itemView);
             mTextViewLine1 = itemView.findViewById(R.id.textview_line1) ;
             mTextViewLine2 = itemView.findViewById(R.id.textview_line_2);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
 
@@ -33,7 +55,7 @@ public class BlocAdapter extends RecyclerView.Adapter<BlocAdapter.BlocViewHolder
     @Override
     public BlocViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.example_item, parent, false);
-        BlocViewHolder evh = new BlocViewHolder(v);
+        BlocViewHolder evh = new BlocViewHolder(v,mListener);
         return evh;
     }
 
